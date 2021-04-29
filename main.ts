@@ -1,33 +1,8 @@
-let onTitle = false
-let onHub = false
-let onLv1 = false
-let onLv2 = false
-let onLv3 = false
-let inHub = false
-let pressStart = sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`)
-
-titleScreen()
-
-function titleScreen() {
+function lv1 () {
+	
+}
+function titleScreen () {
     onTitle = true
-
     scene.setBackgroundImage(img`
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -149,98 +124,38 @@ function titleScreen() {
         fffffffffffffffffffffffffffffffff5555fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff555fffffffffffffffff
         fffffffffffffffffffffffffffffffff55555ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff555fffffffffffffffff
         ffffffffffffffffffffffffffffffffff5555ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff555fffffffffffffffff
-    `)
-
-    pressStart = sprites.create(img`
-        fffff111111111ffffffffffffffffffffffffffffffffffffffffffffffffff
-        fffff111111111ffffffffffffffffffffffffffffffffffffffffffffffffff
-        fffff111111111ffffffffffffffffffffffffffffffffffffffffff111fffff
-        fffff111fff111fffffffffffffffffffffffffffffffffffffffff1111fffff
-        fffff111fff111ff111ffffffffffffffffffffffffffffffffffff1111fffff
-        fffff111fff111ff11111111fffffffffffff111ff111ffffffffff11111ffff
-        fffff111111111ff11111111f11111111fff1111f1111ffffffffff11111ffff
-        fffff111111111ff11111111f111111111ff1111f1111fffffffff1111111fff
-        fffff111111111ff111111fff111111111ff1111f1111ffffffff11111111fff
-        fffff111ffffffff111ffffff111111111ff11111f1111fffffff1111f111fff
-        fffff111ffffffff111ffffff111111111ff11111f1111ffffff1111111111ff
-        fffff111ffffffff111ffffff11111111ffff111111111ffffff1111111111ff
-        fffff111ffffffff111ffffff11111111fffff11111111fffff11111111111ff
-        fffff111ffffffff111ffffffff11111111ff111111111fffff1111ffff111ff
-        fffff111ffffffff111fffffffff1111111ff111111111fffff111fffff111ff
-        fffff111ffffffff111ffffffffffff1111ff111ff111ffffffffffffff111ff
-    `)
-    tiles.placeOnTile(pressStart, tiles.getTileLocation(39, 70))
+        `)
+    game.showLongText("Press A to start", DialogLayout.Bottom)
 }
-
-
-function hub() {
-    tiles.setTilemap(tilemap`mainArea`)
-
-    let player = sprites.create(img`
-        ................
-        ................
-        ................
-        ................
-        .....ffffff.....
-        ...ffeeeef2f....
-        ..ffeeeef222f...
-        ..feeeffeeeef...
-        ..ffffee2222ef..
-        ..fe222ffffe2f..
-        .fffffffeeefff..
-        .ffe44ebf44eef..
-        .fee4d41fddef...
-        ..feee4ddddf....
-        ...ffee444ef....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....edde222f....
-        ....4dde222f....
-        ....edde222f....
-        ....feef455f....
-        ....ffffffff....
-        .....f2f.f2f....
-        .....f2f.f2f....
-        .....fff.fff....
-        ......ff.ff.....
-    `)
-    tiles.placeOnTile(player, tiles.getTileLocation(2, 30))
-    scene.cameraFollowSprite(player)
-    
+function lv3 () {
+	
 }
-
-
-function innerHub() {
-    inHub = true
-
+function lv2 () {
+	
 }
-
-
- function lv1() {
-
- }
-
-
- function lv2() {
-
- }
-
-
- function lv3() {
- 
- }
-
-
-controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function() {
-    if(onTitle == true) {
-        onTitle = false
-        hub()
-        pressStart.destroy()
-    }
+controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
+	
 })
+function hub () {
+    onHub = true
+    tiles.setTilemap(tilemap`mainArea`)
+    tiles.placeOnTile(player, tiles.getTileLocation(2, 29))
+    scene.cameraFollowSprite(player)
+}
+function innerHub () {
+    inHub = true
+}
+let inHub = false
+let onHub = false
+let player: Sprite = null
+let onTitle = false
+tiles.setTilemap(tilemap`mainArea`)
+let pressStart = null
+let onLv1 = false
+let onLv2 = false
+let onLv3 = false
+titleScreen()
+onTitle = false
+hub()
+player = sprites.create(assets.image`myImage0`, 0)
+controller.moveSprite(player, 100, 0)
