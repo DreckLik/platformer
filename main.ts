@@ -1,6 +1,17 @@
 function lv1 () {
 	
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (player.isHittingTile(CollisionDirection.Bottom)) {
+        player.vy += -175
+    }
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    player.vx += 50
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    player.vx += -50
+})
 function titleScreen () {
     onTitle = true
     scene.setBackgroundImage(img`
@@ -133,29 +144,83 @@ function lv3 () {
 function lv2 () {
 	
 }
-controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
-	
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+    innerHub()
 })
 function hub () {
     onHub = true
+    scene.cameraFollowSprite(player)
     tiles.setTilemap(tilemap`mainArea`)
     tiles.placeOnTile(player, tiles.getTileLocation(2, 29))
-    scene.cameraFollowSprite(player)
 }
 function innerHub () {
     inHub = true
 }
 let inHub = false
 let onHub = false
-let player: Sprite = null
 let onTitle = false
-tiles.setTilemap(tilemap`mainArea`)
+let player: Sprite = null
 let pressStart = null
 let onLv1 = false
 let onLv2 = false
 let onLv3 = false
 titleScreen()
+player = sprites.create(assets.image`myImage0`, 0)
 onTitle = false
 hub()
-player = sprites.create(assets.image`myImage0`, 0)
-controller.moveSprite(player, 100, 0)
+forever(function () {
+    if (player.vx < -125) {
+        player.vx = -125
+    }
+})
+forever(function () {
+    if (player.isHittingTile(CollisionDirection.Bottom)) {
+        if (player.vx != 0) {
+            if (player.vx < 0) {
+                player.vx += 5
+            }
+            if (player.vx > 0) {
+                player.vx += -5
+            }
+        }
+    } else {
+        if (player.vx != 0) {
+            if (player.vx < 0) {
+                player.x += 3
+            }
+            if (player.vx > 0) {
+                player.x += -3
+            }
+        }
+    }
+})
+forever(function () {
+    if (controller.right.isPressed()) {
+        player.vx += 10
+    }
+})
+forever(function () {
+    if (player.vx > 125) {
+        player.vx = 125
+    }
+})
+forever(function () {
+    if (controller.left.isPressed()) {
+        player.vx += -10
+    }
+})
+forever(function () {
+    if (player.vx <= 5) {
+        if (player.vx > 0) {
+            player.vx = 0
+        }
+    }
+    if (player.vx >= -5) {
+        if (player.vx < 0) {
+            player.vx = 0
+        }
+    }
+})
+forever(function () {
+    player.vy += 8
+})
