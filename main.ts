@@ -1,5 +1,8 @@
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+    innerHub()
+})
 function lv1 () {
-	
+    tiles.setTilemap(tilemap`level11`)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (player.isHittingTile(CollisionDirection.Bottom)) {
@@ -155,22 +158,28 @@ function hub () {
 }
 function innerHub () {
     inHub = true
+    tiles.setTilemap(tilemap`level10`)
+    tiles.placeOnTile(player, tiles.getTileLocation(2, 15))
+    scene.cameraFollowSprite(player)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
+    lv1()
+})
 let inHub = false
 let onHub = false
-let onTitle = false
 let player: Sprite = null
+let onTitle = false
 let pressStart = null
 let onLv1 = false
 let onLv2 = false
 let onLv3 = false
 titleScreen()
-player = sprites.create(assets.image`myImage0`, 0)
 onTitle = false
+player = sprites.create(assets.image`myImage0`, SpriteKind.Player)
 hub()
 forever(function () {
-    if (player.vx < -125) {
-        player.vx = -125
+    if (player.vx > 125) {
+        player.vx = 125
     }
 })
 forever(function () {
@@ -186,22 +195,22 @@ forever(function () {
     } else {
         if (player.vx != 0) {
             if (player.vx < 0) {
-                player.x += 3
+                player.vx += 3
             }
             if (player.vx > 0) {
-                player.x += -3
+                player.vx += -3
             }
         }
     }
 })
 forever(function () {
-    if (controller.right.isPressed()) {
-        player.vx += 10
+    if (player.vx < -125) {
+        player.vx = -125
     }
 })
 forever(function () {
-    if (player.vx > 125) {
-        player.vx = 125
+    if (controller.right.isPressed()) {
+        player.vx += 10
     }
 })
 forever(function () {
